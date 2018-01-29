@@ -20,5 +20,7 @@ ENV IMAGE_TAG $IMAGE_TAG_REF
 WORKDIR /app
 ADD ./smackapi /app/
 
+RUN chmod +x /app/smackapi
+
 ENTRYPOINT /app/smackapi
 EXPOSE 8081
