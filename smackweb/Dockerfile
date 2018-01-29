@@ -21,5 +21,7 @@ ENV IMAGE_BUILD_DATE $BUILD_DATE
 WORKDIR /app
 ADD ./smackweb /app/
 
+RUN chmod +x /app/smackweb
+
 ENTRYPOINT /app/smackweb
 EXPOSE 8080
