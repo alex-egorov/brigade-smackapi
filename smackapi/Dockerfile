@@ -20,5 +20,5 @@ ENV IMAGE_TAG $IMAGE_TAG_REF
 WORKDIR /app
 ADD ./smackapi /app/
 
-ENTRYPOINT /app
+ENTRYPOINT /app/smackapi
 EXPOSE 8081
