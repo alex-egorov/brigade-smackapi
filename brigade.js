@@ -125,10 +125,10 @@ function dockerJobRunner(config, d) {
 
 function helmJobRunner (config, h, prodWeight, canaryWeight, deployType) {
     h.storage.enabled = false
-    h.image = "alex202/k8s-helm:2.5.1"
+    h.image = "alex202/docker-helm:2.5.1"
     h.tasks = [
         "cd /src/",
-        `helm upgrade --install smackapi-${deployType} ./charts/smackapi --namespace microsmack --set api.image=${config.get("apiACRImage")} --set api.imageTag=${config.get("imageTag")} --set api.deployment=smackapi-${deployType} --set api.versionLabel=${deployType}`
+        `helm upgrade --install smackapi-${deployType} ./charts/smackapi --set api.image=${config.get("apiACRImage")} --set api.imageTag=${config.get("imageTag")} --set api.deployment=smackapi-${deployType} --set api.versionLabel=${deployType}`
     ]
 }
 
