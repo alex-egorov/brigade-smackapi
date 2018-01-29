@@ -8,7 +8,7 @@ events.on("push", (brigadeEvent, project) => {
     brigConfig.set("acrServer", '')
     brigConfig.set("acrUsername", project.secrets.dockerUsername)
     brigConfig.set("acrPassword", project.secrets.dockerPassword)
-    brigConfig.set("apiImage", "alex202/smackapi")
+    brigConfig.set("apiImage", "alex202/brigade-smackapi")
     brigConfig.set("gitSHA", brigadeEvent.commit.substr(0,7))
     brigConfig.set("eventType", brigadeEvent.type)
     brigConfig.set("branch", getBranch(gitPayload))

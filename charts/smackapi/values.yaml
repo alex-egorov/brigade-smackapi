@@ -4,5 +4,5 @@ api:
   deployment: smackapi-prod
   versionLabel: prod
   replicas: 3
-  image: "alex202/smackapi"
+  image: "alex202/brigade-smackapi"
   imageTag: "master"
