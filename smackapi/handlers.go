@@ -28,7 +28,7 @@ func homePage(w http.ResponseWriter, r *http.Request) {
 
 func returnConfig(w http.ResponseWriter, r *http.Request) {
 	var appVersion = os.Getenv("IMAGE_TAG")
-	var backColor = "DarkGary"
+	var backColor = "LightGray"
 	var imageBuildDate = os.Getenv("IMAGE_BUILD_DATE")
 	var kubeNodeName = os.Getenv("KUBE_NODE_NAME")
 	var kubePodName = os.Getenv("KUBE_POD_NAME")
@@ -40,7 +40,7 @@ func returnConfig(w http.ResponseWriter, r *http.Request) {
 	configs := Config{Key: "10", BackColor: backColor, AppVersion: appVersion, BuildDate: imageBuildDate, KubeNodeName: kubeNodeName, KubePodName: kubePodName, KubePodIP: kubePodIP}
 
 	// insert simulated delay if color is red
-	if backColor == "LightGray" {
+	if backColor == "red" {
 		r := random(50, 100)
 		time.Sleep(time.Duration(r) * time.Millisecond)
 	}
