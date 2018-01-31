@@ -1,4 +1,4 @@
-package smackapi
+package main
 
 import (
 	"encoding/json"
@@ -40,7 +40,7 @@ func returnConfig(w http.ResponseWriter, r *http.Request) {
 	configs := Config{Key: "10", BackColor: backColor, AppVersion: appVersion, BuildDate: imageBuildDate, KubeNodeName: kubeNodeName, KubePodName: kubePodName, KubePodIP: kubePodIP}
 
 	// insert simulated delay if color is red
-	if backColor == "red" {
+	if backColor == "LightGray" {
 		r := random(50, 100)
 		time.Sleep(time.Duration(r) * time.Millisecond)
 	}
