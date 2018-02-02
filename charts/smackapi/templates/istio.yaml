@@ -1,0 +1,33 @@
+{{- if .Values.istio.enabled -}}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}
+  annotations:
+    kubernetes.io/ingress.class: "istio"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /getconfig
+        backend:
+          serviceName: {{ template "fullname" . }}
+          servicePort: http-smackapi
+---
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: {{ .Chart.Name }}
+spec:
+  destination:
+    name: {{ template "fullname" . }}
+  route:
+  - labels:
+      version: v1
+    weight: 90
+  - labels:
+      version: v2
+    weight: 10
+---
+{{- end }}

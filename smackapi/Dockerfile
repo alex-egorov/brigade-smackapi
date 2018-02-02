@@ -21,4 +21,4 @@ WORKDIR /app
 ADD ./smackapi /app/
 
 ENTRYPOINT /app/smackapi
-EXPOSE 8081
+EXPOSE 8020
