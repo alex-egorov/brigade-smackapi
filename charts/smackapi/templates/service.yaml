@@ -15,4 +15,4 @@ spec:
       name: http-{{ .Values.service.name }}
   selector:
     app: {{ template "name" . }}
-    #release: {{ .Release.Name }}
+    release: {{ .Release.Name }}

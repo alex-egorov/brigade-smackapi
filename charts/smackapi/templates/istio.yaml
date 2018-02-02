@@ -13,21 +13,56 @@ spec:
       - path: /getconfig
         backend:
           serviceName: {{ template "fullname" . }}
-          servicePort: http-smackapi
+          servicePort: {{ .Values.service.externalPort }}
 ---
 apiVersion: config.istio.io/v1alpha2
 kind: RouteRule
 metadata:
-  name: {{ .Chart.Name }}
+  name: {{ .Chart.Name }}-prod
 spec:
   destination:
     name: {{ template "fullname" . }}
+  precedence: 1
   route:
   - labels:
       version: v1
-    weight: 90
+    weight: {{ .Values.image.v1.weight }}
   - labels:
       version: v2
-    weight: 10
+    weight: {{ .Values.image.v2.weight }}
+---
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: {{ .Chart.Name }}-v1
+spec:
+  destination:
+    name: {{ template "fullname" . }}
+  precedence: 3
+  match:
+    request:
+      headers:
+        ver-{{ template "fullname" . }}:
+          prefix: v1
+  route:
+  - labels:
+      version: v1
+---
+apiVersion: config.istio.io/v1alpha2
+kind: RouteRule
+metadata:
+  name: {{ .Chart.Name }}-v2
+spec:
+  destination:
+    name: {{ template "fullname" . }}
+  precedence: 3
+  match:
+    request:
+      headers:
+        ver-{{ template "fullname" . }}:
+          prefix: v2
+  route:
+  - labels:
+      version: v2
 ---
 {{- end }}

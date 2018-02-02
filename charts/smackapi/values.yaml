@@ -4,9 +4,11 @@ image:
   v1:
     tag: master-42a2f89
     replicas: 3
+    weight: 100
   v2:
     tag: master-42a2f89
     replicas: 1
+    weight: 0
 istio:
   enabled: true
 service:
@@ -15,8 +17,8 @@ service:
   externalPort: 80
   internalPort: 8020
 resources:
-  cpu: 100m
-  memory: 128Mi
+#  cpu: 100m
+#  memory: 128Mi
   #requests:
   #  cpu: 100m
   #  memory: 128Mi

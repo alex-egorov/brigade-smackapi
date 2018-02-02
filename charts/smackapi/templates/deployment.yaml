@@ -14,7 +14,9 @@ spec:
       labels:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
-        version: {{ .Values.version }}
+        #version: {{ .Values.image.v1.tag }}
+        version: v1
+        tag: {{ .Values.image.v1.tag | quote }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
@@ -54,11 +56,13 @@ spec:
       labels:
         app: {{ template "name" . }}
         release: {{ .Release.Name }}
-        version: {{ .Values.version }}
+        #version: {{ .Values.image.v2.tag }}
+        version: v2
+        tag: {{ .Values.image.v2.tag | quote }}
     spec:
       containers:
       - name: {{ .Chart.Name }}
-       image: "{{ .Values.image.repository }}:{{ .Values.image.v2.tag }}"
+        image: "{{ .Values.image.repository }}:{{ .Values.image.v2.tag }}"
         imagePullPolicy: {{ .Values.image.pullPolicy }}
         ports:
           - containerPort: {{ .Values.service.internalPort }}
