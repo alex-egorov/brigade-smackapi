@@ -3,7 +3,7 @@ image:
   pullPolicy: Always
   v1:
     tag: master-42a2f89
-    replicas: 3
+    replicas: 1
     weight: 100
   v2:
     tag: master-42a2f89
