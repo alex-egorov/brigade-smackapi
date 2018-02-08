@@ -14,6 +14,9 @@ podTemplate(label: 'mypod', containers: [
 
         checkout scm
 
+                // print environment variables
+                echo sh(script: 'env|sort', returnStdout: true)
+
         stage('do some helm work') {
             container('helm') {
 
@@ -22,7 +25,7 @@ podTemplate(label: 'mypod', containers: [
                     sh "helm ls"
 
                     sh "helm lint smackapi"
-                    sh "helm upgrade -i smackapi --set image.tag=${imageTag} smackapi"
+                    //sh "helm upgrade -i smackapi --set image.tag=${imageTag} smackapi"
                 }
             }
         }
