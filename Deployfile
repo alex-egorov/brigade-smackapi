@@ -16,7 +16,7 @@ podTemplate(label: 'mypod', containers: [
 
                 // print environment variables
                 echo sh(script: 'env|sort', returnStdout: true)
-                echo sh(script: 'echo params', returnStdout: true)
+                echo params
 
         stage('do some helm work') {
             container('helm') {
