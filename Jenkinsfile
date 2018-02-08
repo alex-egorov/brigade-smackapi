@@ -1,5 +1,11 @@
 #!/usr/bin/env groovy
 
+    parameters {
+        string(defaultValue: "TEST", description: 'What environment?', name: 'userFlag')
+        // choices are newline separated
+        choice(choices: 'US-EAST-1\nUS-WEST-2', description: 'What AWS region?', name: 'region')
+    }
+    
 def projectName = "smackapi"
 def imageName = "alex202/brigade-smackapi"
 
