@@ -18,7 +18,7 @@ ENV IMAGE_BUILD_DATE $BUILD_DATE
 ENV IMAGE_TAG $IMAGE_TAG_REF
 
 WORKDIR /app
-ADD smackapi /app/
+ADD target/smackapi /app/
 
 RUN chmod +x /app/smackapi
 

@@ -36,7 +36,8 @@ podTemplate(label: 'mypod', containers: [
         if (env['BRANCH_NAME']) {
             gitBranch = BRANCH_NAME
         } else {
-            sh "git rev-parse --abbrev-ref HEAD > .git/branch-name"
+            sh "git rev-parse --symbolic-full-name --abbrev-ref HEAD"
+            sh "git rev-parse --symbolic-full-name --abbrev-ref HEAD > .git/branch-name"
             gitBranch = readFile('.git/branch-name').trim()
 
         }
@@ -63,12 +64,13 @@ DOCKER_IMAGE_TAG=${imageTag}
                 def pwd = pwd()
 
                 sh """
+                    go env
                     ls -la
                     mkdir -p /go/src/github.com/alex-egorov
-                    ln -s $pwd /go/src/github.com/alex-egorov/${projectName}
+                    ln -s $pwd /go/src/github.com/alex-egorov/
                     cd /go/src/github.com/alex-egorov/${projectName}
                     go get -v
-                    GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -v -o ${projectName}
+                    GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -v -o target/${projectName}
 
                     ls -la
                 """

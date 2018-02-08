@@ -1,4 +1,4 @@
-package smackapi
+package main
 
 import (
 	"log"
