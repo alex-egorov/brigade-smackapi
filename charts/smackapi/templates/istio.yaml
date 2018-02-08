@@ -1,23 +1,23 @@
 {{- if .Values.istio.enabled -}}
-#---
-#apiVersion: extensions/v1beta1
-#kind: Ingress
-#metadata:
-#  name: {{ .Chart.Name }}
-#  annotations:
-#    kubernetes.io/ingress.class: "istio"
-#spec:
-#  rules:
-#  - http:
-#      paths:
-#      - path: /getconfig
-#        backend:
-#          serviceName: {{ template "fullname" . }}
-#          servicePort: {{ .Values.service.externalPort }}
-#      - path: /test
-#        backend:
-#          serviceName: {{ template "fullname" . }}
-#          servicePort: {{ .Values.service.externalPort }}
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Chart.Name }}
+  annotations:
+    kubernetes.io/ingress.class: "istio"
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /getconfig
+        backend:
+          serviceName: {{ template "fullname" . }}
+          servicePort: {{ .Values.service.externalPort }}
+      - path: /test
+        backend:
+          serviceName: {{ template "fullname" . }}
+          servicePort: {{ .Values.service.externalPort }}
 ---
 {{- if .Values.istio.release.enabled -}}
 apiVersion: config.istio.io/v1alpha2
