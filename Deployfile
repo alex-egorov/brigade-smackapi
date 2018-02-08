@@ -4,7 +4,7 @@ podTemplate(label: 'mypod', containers: [
     containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ],
   envVars: [
-    envVar(key: 'v1_release', value: ${env.v1_release})
+    envVar(key: 'v1_release', value: env.v1_release)
   ],
   volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
