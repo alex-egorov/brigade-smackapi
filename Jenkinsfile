@@ -63,10 +63,13 @@ DOCKER_IMAGE_TAG=${imageTag}
                 def pwd = pwd()
 
                 sh """
-                    mkdir -p /go/src/github.com
-                    ln -s $pwd /go/src/github.com
-                    cd /go/src/github.com/${projectName}
-                    go get && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o target/${projectName}
+                    ls -la 
+                    mkdir -p /go/src/github.com/alex-egorov
+                    ln -s $pwd /go/src/github.com/alex-egorov/${projectName}
+                    cd /go/src/github.com/alex-egorov/${projectName}
+                    go get && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ${projectName}
+
+                    ls -la
                 """
             }
         }
