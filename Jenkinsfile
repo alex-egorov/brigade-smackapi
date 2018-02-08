@@ -27,7 +27,7 @@ podTemplate(label: 'mypod', containers: [
         checkout scm
 
         // print environment variables
-        echo sh(script: 'env|sort', returnStdout: true)
+        //echo sh(script: 'env|sort', returnStdout: true)
 
         sh "git rev-parse --short HEAD > .git/commit-id"
         gitCommit = readFile('.git/commit-id').trim()
@@ -36,7 +36,7 @@ podTemplate(label: 'mypod', containers: [
         if (env['BRANCH_NAME']) {
             gitBranch = BRANCH_NAME
         } else {
-            sh "git rev-parse --symbolic-full-name --abbrev-ref HEAD"
+
             sh "git rev-parse --symbolic-full-name --abbrev-ref HEAD > .git/branch-name"
             gitBranch = readFile('.git/branch-name').trim()
 
@@ -61,6 +61,8 @@ DOCKER_IMAGE_TAG=${imageTag}
         stage('Build go binaries') {
             container('golang') {
 
+            sh "git rev-parse --symbolic-full-name --abbrev-ref HEAD"
+
                 def pwd = pwd()
 
                 sh """
@@ -75,7 +77,7 @@ DOCKER_IMAGE_TAG=${imageTag}
                     ls -la
                 """
 
-                archiveArtifacts artifacts: 'smackapi', excludes: 'output/*.md'
+                archiveArtifacts artifacts: 'target/*', excludes: 'target/*.tmp'
             }
         }
 
