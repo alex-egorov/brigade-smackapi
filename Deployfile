@@ -4,7 +4,7 @@ podTemplate(label: 'mypod', containers: [
     containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', command: 'cat', ttyEnabled: true)
   ],
   envVars: [
-    envVar(key: 'v1_release', value: env.v1_release)
+    envVar(key: 'aaa', value: 'bbb')
   ],
   volumes: [
     hostPathVolume(mountPath: '/var/run/docker.sock', hostPath: '/var/run/docker.sock'),
@@ -14,12 +14,8 @@ podTemplate(label: 'mypod', containers: [
 
         checkout scm
 
-        echo "${env.v1_release}"
-        echo ""
-        echo ""
-
-                // print environment variables
-                echo sh(script: 'env|sort', returnStdout: true)
+        // print environment variables
+        echo sh(script: 'env|sort', returnStdout: true)
 
         stage('do some helm work') {
             container('helm') {
@@ -29,7 +25,14 @@ podTemplate(label: 'mypod', containers: [
                     sh "helm ls"
 
                     sh "helm lint smackapi"
-                    //sh "helm upgrade -i smackapi --set image.tag=${imageTag} smackapi"
+
+                    sh """
+                        helm upgrade -i smackapi --set istio.enabled=true \
+                            --set istio.release.enabled=true --set istio.tags.enabled=false \
+                            --set image.v1.release=${env.V1_RELEASE} --set image.v1.weight=${env.V1_WEIGHT} \
+                            --set image.v2.release=${env.V2_RELEASE} --set image.v2.weight=${env.V2_WEIGHT} \
+                        smackapi
+                     """
                 }
             }
         }
