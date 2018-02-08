@@ -37,8 +37,10 @@ podTemplate(label: 'mypod', containers: [
             gitBranch = BRANCH_NAME
         } else {
 
-            sh "git rev-parse --symbolic-full-name --abbrev-ref HEAD > .git/branch-name"
-            gitBranch = readFile('.git/branch-name').trim()
+            //sh "git rev-parse --symbolic-full-name --abbrev-ref HEAD > .git/branch-name"
+            //gitBranch = readFile('.git/branch-name').trim()
+            gitBranch = sh returnStdout: true, script: 'git rev-parse --abbrev-ref HEAD'
+            gitBranch = gitBranch.trim()
 
         }
 
