@@ -1,24 +1,20 @@
-image:
-  repository: alex202/brigade-smackapi
-  pullPolicy: Always
-  v1:
-    tag: master-42a2f89
-    replicas: 1
-    weight: 100
-  v2:
-    tag: master-42a2f89
-    replicas: 1
-    weight: 0
-istio:
-  enabled: true
 service:
   name: smackapi
   type: ClusterIP
   externalPort: 80
   internalPort: 8020
-resources:
-#  cpu: 100m
-#  memory: 128Mi
-  #requests:
-  #  cpu: 100m
-  #  memory: 128Mi
+istio:
+  enabled: true
+  release:
+    enabled: false
+  tags:
+    enabled: true
+routes:
+  v1:
+    weight: 80
+    release: smackapi-v1
+    tag: pr1-07d3ba5
+  v2:
+    weight: 20
+    release: smackapi-v2
+    tag:  master-4c5a465
