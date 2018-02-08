@@ -1,5 +1,6 @@
 #!/usr/bin/env groovy
 
+def projectName = "smackapi"
 def imageName = "alex202/brigade-smackapi"
 
 def gitCommit = null
@@ -63,8 +64,8 @@ DOCKER_IMAGE_TAG=${imageTag}
                 sh """
                     mkdir -p /go/src/github.com
                     ln -s $pwd /go/src/github.com
-                    cd /go/src/github.com/smackweb
-                    go get && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o target/smackapi
+                    cd /go/src/github.com/${projectName}
+                    go get && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o target/${projectName}
                 """
             }
         }
