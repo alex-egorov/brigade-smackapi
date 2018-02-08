@@ -10,7 +10,7 @@ def imageTag = null
 def buildDate = null
 
 podTemplate(label: 'mypod', containers: [
-    containerTemplate(name: 'golang', image: 'golang:1.8', ttyEnabled: true, command: 'cat'),
+    containerTemplate(name: 'golang', image: 'golang:1.9', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'docker', image: 'docker', ttyEnabled: true, command: 'cat'),
     containerTemplate(name: 'kubectl', image: 'lachlanevenson/k8s-kubectl:v1.8.0', command: 'cat', ttyEnabled: true),
     containerTemplate(name: 'helm', image: 'lachlanevenson/k8s-helm:latest', command: 'cat', ttyEnabled: true)
@@ -63,14 +63,17 @@ DOCKER_IMAGE_TAG=${imageTag}
                 def pwd = pwd()
 
                 sh """
-                    ls -la 
+                    ls -la
                     mkdir -p /go/src/github.com/alex-egorov
                     ln -s $pwd /go/src/github.com/alex-egorov/${projectName}
                     cd /go/src/github.com/alex-egorov/${projectName}
-                    go get && GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -o ${projectName}
+                    go get -v
+                    GOOS=linux GOARCH=amd64 CGO_ENABLED=0 go build -v -o ${projectName}
 
                     ls -la
                 """
+
+                archiveArtifacts artifacts: 'smackapi', excludes: 'output/*.md'
             }
         }
 
